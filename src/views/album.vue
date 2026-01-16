@@ -28,7 +28,9 @@
           <span v-else>Compilation by Various Artists</span>
         </div>
         <div class="date-and-count">
-          <span v-if="album.mark === 1056768" class="explicit-symbol"
+          <span
+            v-if="(album.mark & 1048576) === 1048576"
+            class="explicit-symbol"
             ><ExplicitSymbol
           /></span>
           <span :title="album.publishTime | formatDate">{{
@@ -96,9 +98,7 @@
         {{ $t('album.released') }}
         {{ album.publishTime | formatDate('MMMM D, YYYY') }}
       </div>
-      <div v-if="album.company !== null" class="copyright">
-        © {{ album.company }}
-      </div>
+      <div v-if="album.company" class="copyright"> © {{ album.company }} </div>
     </div>
     <div v-if="filteredMoreAlbums.length !== 0" class="more-by">
       <div class="section-title">

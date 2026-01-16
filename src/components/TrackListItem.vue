@@ -21,7 +21,7 @@
           style="height: 14px; width: 14px"
         ></svg-icon>
       </button>
-      <span v-show="(!focus || !playable) && !isPlaying">{{ track.no }}</span>
+      <span v-show="(!focus || !playable) && !isPlaying">{{ trackNo }}</span>
       <button v-show="isPlaying">
         <svg-icon
           icon-class="volume"
@@ -42,13 +42,15 @@
               :exclude="$parent.albumObject.artist.name"
               prefix="-"
           /></span>
-          <span v-if="isAlbum && track.mark === 1318912" class="explicit-symbol"
+          <span
+            v-if="isAlbum && (track.mark & 1048576) === 1048576"
+            class="explicit-symbol"
             ><ExplicitSymbol
           /></span>
         </div>
         <div v-if="!isAlbum" class="artist">
           <span
-            v-if="track.mark === 1318912"
+            v-if="(track.mark & 1048576) === 1048576"
             class="explicit-symbol before-artist"
             ><ExplicitSymbol :size="15"
           /></span>
@@ -96,6 +98,7 @@ export default {
 
   props: {
     trackProp: Object,
+    trackNo: Number,
     highlightPlayingTrack: {
       type: Boolean,
       default: true,
